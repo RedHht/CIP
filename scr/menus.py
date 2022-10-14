@@ -17,7 +17,7 @@ def test_agregar_curso():
                 labelinfo.config(text="Ingrese una division desde 1° a 6°.")
         else:
             labelinfo.config(text="Ingrese un año desde 1° a 7°.")
-    except NameError:
+    except:
         pass
         labelinfo.config(text="Ingrese numeros validos.")
 

@@ -14,7 +14,7 @@ gui.resizable(False, False)
 def donothing():
     print("AAA")
 
-imagen = PIL.Image.open("cip.jpg")
+imagen = PIL.Image.open("img/cip.jpg")
 imagen = imagen.resize(size=(300, 290))
 image = ImageTk.PhotoImage(imagen)
 Label(gui, image=image).place(x=250, y=10)

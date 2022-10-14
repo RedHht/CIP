@@ -11,8 +11,13 @@ def test_agregar_curso():
             if divisiontest > 0 and divisiontest <= 6:
                 añotest = str(añotest)
                 divisiontest = str(divisiontest)
-                cursos = agregar_curso(añotest + "°" + divisiontest)
-                labelinfo.config(text="Este curso fue agregado satisfactoriamente.")
+                try:
+                    cursos.index(añotest + "°" + divisiontest) 
+                    labelinfo.config(text="Este curso ya existe.") 
+                except ValueError:
+                    cursos = agregar_curso(añotest + "°" + divisiontest)
+                    cursos.sort()
+                    labelinfo.config(text="Este curso fue agregado satisfactoriamente.")
             else:
                 labelinfo.config(text="Ingrese una division desde 1° a 6°.")
         else:
@@ -71,8 +76,10 @@ def menu_listar_cursos():
     cursos_formateados = ""
 
     for x in cursos:
-        cursos_formateados = cursos_formateados + " " + x
-        print(cursos_formateados)
+        if cursos.index(x) == 0:
+            cursos_formateados = x
+        else: 
+            cursos_formateados = cursos_formateados + ", " + x
     
     labelcursosformateados.config(text="Los cursos que existen actualmente son: " + cursos_formateados)
 

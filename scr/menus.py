@@ -40,8 +40,8 @@ def menu_agregar_curso():
     labelaño = Label(gui_agregar_curso, text="Año:", background="#ffffff")
     entryaño = Entry(gui_agregar_curso, textvariable=año, width=5)
 
-    labelaño.place(y=10, x=10)
-    entryaño.place(y=10, x=50)
+    labelaño.grid(row=0, column=0, sticky='w')
+    entryaño.grid(row=0, column=1, sticky='w')
 
     global division
 
@@ -50,18 +50,18 @@ def menu_agregar_curso():
     labeldivision = Label(gui_agregar_curso, text="Division:", background="#ffffff")
     entrydivision = Entry(gui_agregar_curso, textvariable=division, width=5)
 
-    labeldivision.place(y=10, x=100)
-    entrydivision.place(y=10, x=150)
+    labeldivision.grid(row=1, column=0, sticky='w')
+    entrydivision.grid(row=1, column=1, sticky='w')
 
     global labelinfo
 
     labelinfo = Label(gui_agregar_curso, text="", background="#ffffff")
 
-    labelinfo.place(y=50, x=10)
+    labelinfo.grid(row=2, column=1, sticky='w')
 
     ingresar = Button(gui_agregar_curso, text="Ingresar curso", command=test_agregar_curso)
 
-    ingresar.place(y=100, x=10)
+    ingresar.grid(row=2, column=0, sticky='w')
 
 def menu_listar_cursos():
     gui_listar_cursos = Toplevel()

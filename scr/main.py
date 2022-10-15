@@ -11,9 +11,6 @@ gui.title("C.I.P (Menu Principal)")
 gui.config(bg="#d4d8e6")
 gui.resizable(False, False)
 
-def donothing():
-    print("AAA")
-
 imagen = PIL.Image.open("img/cip.jpg")
 imagen = imagen.resize(size=(300, 290))
 image = ImageTk.PhotoImage(imagen)

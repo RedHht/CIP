@@ -1,5 +1,6 @@
 from tkinter import *
 from tkinter import ttk
+from tkinter import messagebox
 from funciones import *
 
 def test_agregar_curso():
@@ -39,8 +40,24 @@ def test_agregar_alumno():
             labelinfoingresaralumno.config(text="Alumno agregado correctamente")
 
 def lista_de_alumnos():
+    gui_lista_alumno = Toplevel()
+    gui_lista_alumno.geometry("400x75")
+    gui_lista_alumno.title("C.I.P (Lista de alumnos del curso)")
+    gui_lista_alumno.config(bg="#ffffff")
+
+    label_alumnos = Label(gui_lista_alumno, text="Los alumnos de este curso son:", bg="#ffffff")
+
+    label_alumnos.grid(row=0, column=0, sticky='w', padx=5, pady=5)
+
+
     alumnos = lista_alumnos(curso_listar_alumno.get())
-    print(alumnos)
+
+    linea = 0
+
+    for x in sorted(alumnos):
+        Label(gui_lista_alumno, text=x, background="#ffffff").grid(row=linea, column=1, sticky='w', padx=5, pady=5)
+        linea += 1 
+
     return alumnos
 
 def menu_agregar_curso():
@@ -81,24 +98,27 @@ def menu_agregar_curso():
     ingresar.grid(row=2, column=0, sticky='w', padx=5, pady=5)
 
 def menu_listar_cursos():
-    gui_listar_cursos = Toplevel()
-    gui_listar_cursos.geometry("400x200")
-    gui_listar_cursos.title("C.I.P (Lista de cursos)")
-    gui_listar_cursos.config(bg="#ffffff")
+    if len(cursos) == 0:
+        messagebox.showerror(message="Actualmente no existe ningun curso", title="Error")
+    else:
+        gui_listar_cursos = Toplevel()
+        gui_listar_cursos.geometry("400x200")
+        gui_listar_cursos.title("C.I.P (Lista de cursos)")
+        gui_listar_cursos.config(bg="#ffffff")
 
-    labelcursosformateados = Label(gui_listar_cursos, text="", background="#ffffff", wraplength=390, justify=LEFT)
+        labelcursosformateados = Label(gui_listar_cursos, text="", background="#ffffff", wraplength=390, justify=LEFT)
 
-    labelcursosformateados.place(y=10, x=10)
+        labelcursosformateados.place(y=10, x=10)
 
-    cursos_formateados = ""
+        cursos_formateados = ""
 
-    for x in cursos:
-        if cursos.index(x) == 0:
-            cursos_formateados = x
-        else: 
-            cursos_formateados = cursos_formateados + ", " + x
-    
-    labelcursosformateados.config(text="Los cursos que existen actualmente son: " + cursos_formateados)
+        for x in cursos:
+            if cursos.index(x) == 0:
+                cursos_formateados = x
+            else: 
+                cursos_formateados = cursos_formateados + ", " + x
+        
+        labelcursosformateados.config(text="Los cursos que existen actualmente son: " + cursos_formateados)
 
 def menu_agregar_alumno():
 
@@ -136,7 +156,7 @@ def menu_agregar_alumno():
 
 def menu_listar_alumnos():
     gui_listar_alumno = Toplevel()
-    gui_listar_alumno.geometry("400x150")
+    gui_listar_alumno.geometry("400x75")
     gui_listar_alumno.title("C.I.P (Lista de alumnos)")
     gui_listar_alumno.config(bg="#ffffff")
 
@@ -145,8 +165,8 @@ def menu_listar_alumnos():
     curso_listar_alumno = StringVar()
 
     combocursos = ttk.Combobox(gui_listar_alumno, values=cursos, textvariable=curso_listar_alumno, state="readonly")
-    combocursos.place(y=10, x=10)
+    combocursos.grid(row=0, column=0, sticky='w', padx=5, pady=5)
 
     ingresar = Button(gui_listar_alumno, text="Ver lista de alumnos", command=lista_de_alumnos)
 
-    ingresar.place(y=100, x=10)
+    ingresar.grid(row=2, column=0, sticky='w', padx=5, pady=5)

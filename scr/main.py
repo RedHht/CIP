@@ -19,7 +19,6 @@ imagen = imagen.resize(size=(300, 290))
 image = ImageTk.PhotoImage(imagen)
 Label(gui, image=image).place(x=250, y=10)
 
-
 menubar = Menu(gui)
 filemenu = Menu(menubar, tearoff=0)
 filemenu.add_command(label="Agregar curso", command=menu_agregar_curso)
@@ -28,7 +27,7 @@ menubar.add_cascade(label="Cursos", menu=filemenu)
 
 helpmenu = Menu(menubar, tearoff=0)
 helpmenu.add_command(label="Agregar alumno", command=menu_agregar_alumno)
-helpmenu.add_command(label="About...", command=donothing)
+helpmenu.add_command(label="Listar alumnos", command=menu_listar_alumnos)
 menubar.add_cascade(label="Alumnos", menu=helpmenu)
 
 gui.config(menu=menubar)

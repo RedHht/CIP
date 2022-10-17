@@ -112,7 +112,7 @@ def menu_listar_cursos():
 
         cursos_formateados = ""
 
-        for x in cursos:
+        for x in sorted(cursos):
             if cursos.index(x) == 0:
                 cursos_formateados = x
             else: 
@@ -131,7 +131,7 @@ def menu_agregar_alumno():
 
     curso_agregar_alumno = StringVar()
 
-    combocursos = ttk.Combobox(gui_agregar_alumno, values=cursos, textvariable=curso_agregar_alumno, state="readonly")
+    combocursos = ttk.Combobox(gui_agregar_alumno, values=sorted(cursos), textvariable=curso_agregar_alumno, state="readonly")
     combocursos.grid(row=0, column=0, sticky='w', padx=5, pady=5)
 
     global alumno_agregar_alumno
@@ -164,7 +164,7 @@ def menu_listar_alumnos():
 
     curso_listar_alumno = StringVar()
 
-    combocursos = ttk.Combobox(gui_listar_alumno, values=cursos, textvariable=curso_listar_alumno, state="readonly")
+    combocursos = ttk.Combobox(gui_listar_alumno, values=sorted(cursos), textvariable=curso_listar_alumno, state="readonly")
     combocursos.grid(row=0, column=0, sticky='w', padx=5, pady=5)
 
     ingresar = Button(gui_listar_alumno, text="Ver lista de alumnos", command=lista_de_alumnos)

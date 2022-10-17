@@ -41,22 +41,31 @@ def test_agregar_alumno():
 
 def lista_de_alumnos():
     gui_lista_alumno = Toplevel()
-    gui_lista_alumno.geometry("400x75")
+    gui_lista_alumno.geometry("400x500")
     gui_lista_alumno.title("C.I.P (Lista de alumnos del curso)")
     gui_lista_alumno.config(bg="#ffffff")
+    gui_lista_alumno.resizable(False, False)
+
+    scrollbar = ttk.Scrollbar(gui_lista_alumno, orient='vertical')
 
     label_alumnos = Label(gui_lista_alumno, text="Los alumnos de este curso son:", bg="#ffffff")
 
     label_alumnos.grid(row=0, column=0, sticky='w', padx=5, pady=5)
 
-
     alumnos = lista_alumnos(curso_listar_alumno.get())
 
-    linea = 0
+    #linea = 0
+
+    mylist = Listbox(gui_lista_alumno, yscrollcommand = scrollbar.set )
+    mylist.grid(row=0, column=1, sticky='w', padx=5, pady=5)
 
     for x in sorted(alumnos):
-        Label(gui_lista_alumno, text=x, background="#ffffff").grid(row=linea, column=1, sticky='w', padx=5, pady=5)
-        linea += 1 
+        mylist.insert(END, x)
+        #Label(gui_lista_alumno, text=x, background="#ffffff").grid(row=linea, column=1, sticky='w', padx=5, pady=5)
+        #linea += 1 
+
+    scrollbar.grid(row=0, column=2, sticky='ns')
+    scrollbar.config( command = mylist.yview )
 
     return alumnos
 

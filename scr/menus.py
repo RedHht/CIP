@@ -39,33 +39,48 @@ def test_agregar_alumno():
             agregar_alumno(curso, alumno)
             labelinfoingresaralumno.config(text="Alumno agregado correctamente")
 
+def test_agregar_profesor():
+    curso = curso_agregar_profesor.get()
+    profesor = profesor_agregar_profesor.get()
+    if curso == "":
+        labelinfoingresarprofesor.config(text="No ingresaste ningun curso")
+    else:
+        if profesor == "":
+            labelinfoingresarprofesor.config(text="No ingresaste ningun profesor")
+        else:
+            agregar_profesor(curso, profesor)
+            labelinfoingresarprofesor.config(text="Profesor agregado correctamente")
+
+def ing_valores():
+    for x in checkbox:
+        print(x.get())
+
 def lista_de_alumnos():
     gui_lista_alumno = Toplevel()
-    gui_lista_alumno.geometry("400x500")
+    gui_lista_alumno.geometry("400x75")
     gui_lista_alumno.title("C.I.P (Lista de alumnos del curso)")
     gui_lista_alumno.config(bg="#ffffff")
-    gui_lista_alumno.resizable(False, False)
-
-    scrollbar = ttk.Scrollbar(gui_lista_alumno, orient='vertical')
 
     label_alumnos = Label(gui_lista_alumno, text="Los alumnos de este curso son:", bg="#ffffff")
 
     label_alumnos.grid(row=0, column=0, sticky='w', padx=5, pady=5)
 
+
     alumnos = lista_alumnos(curso_listar_alumno.get())
 
-    #linea = 0
-
-    mylist = Listbox(gui_lista_alumno, yscrollcommand = scrollbar.set )
-    mylist.grid(row=0, column=1, sticky='w', padx=5, pady=5)
+    linea = 0
+    global checkbox
+    checkbox = []
 
     for x in sorted(alumnos):
-        mylist.insert(END, x)
-        #Label(gui_lista_alumno, text=x, background="#ffffff").grid(row=linea, column=1, sticky='w', padx=5, pady=5)
-        #linea += 1 
+        Label(gui_lista_alumno, text=x, background="#ffffff").grid(row=linea, column=1, sticky='w', padx=5, pady=5)
+        checkbox.append(IntVar())
+        Checkbutton(gui_lista_alumno, background="#ffffff", variable=checkbox[linea]).grid(row=linea, column=2, sticky='w', padx=5, pady=5)
+        linea += 1 
+        
+    linea += 1 
 
-    scrollbar.grid(row=0, column=2, sticky='ns')
-    scrollbar.config( command = mylist.yview )
+    Button(gui_lista_alumno, text="Ingresar valores", command=ing_valores).grid(row=linea, column=0, sticky='w', padx=5, pady=5)
 
     return alumnos
 
@@ -179,3 +194,61 @@ def menu_listar_alumnos():
     ingresar = Button(gui_listar_alumno, text="Ver lista de alumnos", command=lista_de_alumnos)
 
     ingresar.grid(row=2, column=0, sticky='w', padx=5, pady=5)
+
+def menu_agregar_profesor():
+
+    gui_agregar_profesor = Toplevel()
+    gui_agregar_profesor.geometry("400x150")
+    gui_agregar_profesor.title("C.I.P (Agregar un profesor)")
+    gui_agregar_profesor.config(bg="#ffffff")
+
+    global curso_agregar_profesor
+
+    curso_agregar_profesor = StringVar()
+
+    combocursos = ttk.Combobox(gui_agregar_profesor, values=cursos, textvariable=curso_agregar_profesor, state="readonly")
+    combocursos.grid(row=0, column=0, sticky='w', padx=5, pady=5)
+
+    global profesor_agregar_profesor
+
+    profesor_agregar_profesor = StringVar()
+
+    labelprofesor = Label(gui_agregar_profesor, text="Ingrese el nombre del profesor: ", background="#ffffff")
+    entryprofesor = Entry(gui_agregar_profesor, textvariable=profesor_agregar_profesor, background="#ffffff")
+
+    labelprofesor.grid(row=1, column=0, sticky='w', padx=5, pady=5)
+    entryprofesor.grid(row=1, column=1, sticky='w', padx=5, pady=5)
+
+    global labelinfoingresarprofesor
+
+    labelinfoingresarprofesor = Label(gui_agregar_profesor, text="", background="#ffffff")
+
+    labelinfoingresarprofesor.grid(row=2, column=1, sticky='w', padx=5, pady=5)
+
+    ingresar = Button(gui_agregar_profesor, text="Agregar profesor al curso", command=test_agregar_profesor)
+
+    ingresar.grid(row=2, column=0, sticky='w', padx=5, pady=5)
+
+#def agregarprof():
+#    if(escuela.get() == "s"):
+#        print("a seleccionado ausente")
+#    else:
+#        if(escuela.get() == "a"):
+#            print("a seleccionado presente")
+
+
+#x = Tk()
+#x.title("lista de profesores") #Titulo
+#x.geometry("520x200") # ancho y altur
+
+#presente=IntVar()
+#ausente=IntVar()
+#depa=StringVar()
+#deps=StringVar()
+#escuela= StringVar()
+#escuela.set("m")
+
+#Checkbutton(x,text="presente",variable=depa,onvalue="a").place(x=10,y=55)
+#Checkbutton(x,text="ausente",variable=deps,onvalue="s").place(x=10,y=55)
+
+

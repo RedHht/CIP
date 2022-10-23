@@ -52,37 +52,72 @@ def test_agregar_profesor():
             labelinfoingresarprofesor.config(text="Profesor agregado correctamente")
 
 def ing_valores():
+
     for x in checkbox:
-        print(x.get())
+        x = x.get()
+        globals()["pres" + curso_listar_alumno.get()].append(x)
 
 def lista_de_alumnos():
-    gui_lista_alumno = Toplevel()
-    gui_lista_alumno.geometry("400x75")
-    gui_lista_alumno.title("C.I.P (Lista de alumnos del curso)")
-    gui_lista_alumno.config(bg="#ffffff")
+    if curso_listar_alumno.get() == "":
+        messagebox.showerror(title="Error", message="Selecciona un curso")
+    
+    else:
+        gui_lista_alumno = Toplevel()
+        gui_lista_alumno.geometry("400x75")
+        gui_lista_alumno.title("C.I.P (Lista de alumnos del curso)")
+        gui_lista_alumno.config(bg="#ffffff")
 
-    label_alumnos = Label(gui_lista_alumno, text="Los alumnos de este curso son:", bg="#ffffff")
+        label_alumnos = Label(gui_lista_alumno, text="Los alumnos de este curso son:", bg="#ffffff")
 
-    label_alumnos.grid(row=0, column=0, sticky='w', padx=5, pady=5)
+        label_alumnos.grid(row=0, column=0, sticky='w', padx=5, pady=5)
+
+        if len(globals()["pres" + curso_listar_alumno.get()]) == 0:
+
+            alumnos = lista_alumnos(curso_listar_alumno.get())
+
+            linea = 0
+
+            global checkbox
+
+            checkbox = []
+
+            for x in sorted(alumnos):
+                Label(gui_lista_alumno, text=x, background="#ffffff").grid(row=linea, column=1, sticky='w', padx=5, pady=5)
+                checkbox.append(IntVar())
+                Checkbutton(gui_lista_alumno, background="#ffffff", variable=checkbox[linea]).grid(row=linea, column=2, sticky='w', padx=5, pady=5)
+                linea += 1 
+                
+            linea += 1 
+        else:
+
+            alumnos = lista_alumnos(curso_listar_alumno.get())
+
+            linea = 0
+            lineaa = 0
+
+            for x in sorted(alumnos):
+                Label(gui_lista_alumno, text=x, background="#ffffff").grid(row=linea, column=1, sticky='w', padx=5, pady=5)
+                linea += 1 
 
 
-    alumnos = lista_alumnos(curso_listar_alumno.get())
+            for i in globals()["pres" + curso_listar_alumno.get()]:
+                print(globals()["pres" + curso_listar_alumno.get()])
+                if i == 1:
+                    activo = Checkbutton(gui_lista_alumno, background="#ffffff", variable=globals()["pres" + curso_listar_alumno.get()][lineaa])
+                    activo.grid(row=lineaa, column=2, sticky='w', padx=5, pady=5)
+                    activo.select()
+                elif i == 0:
+                    desactivo = Checkbutton(gui_lista_alumno, background="#ffffff", variable=globals()["pres" + curso_listar_alumno.get()][lineaa])
+                    desactivo.grid(row=lineaa, column=2, sticky='w', padx=5, pady=5)
+                    desactivo.deselect()
+                lineaa += 1 
+                
+                
+            linea += 1 
 
-    linea = 0
-    global checkbox
-    checkbox = []
+        Button(gui_lista_alumno, text="Ingresar valores", command=ing_valores).grid(row=linea, column=0, sticky='w', padx=5, pady=5)
 
-    for x in sorted(alumnos):
-        Label(gui_lista_alumno, text=x, background="#ffffff").grid(row=linea, column=1, sticky='w', padx=5, pady=5)
-        checkbox.append(IntVar())
-        Checkbutton(gui_lista_alumno, background="#ffffff", variable=checkbox[linea]).grid(row=linea, column=2, sticky='w', padx=5, pady=5)
-        linea += 1 
-        
-    linea += 1 
-
-    Button(gui_lista_alumno, text="Ingresar valores", command=ing_valores).grid(row=linea, column=0, sticky='w', padx=5, pady=5)
-
-    return alumnos
+        return alumnos
 
 def menu_agregar_curso():
 

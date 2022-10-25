@@ -1,6 +1,6 @@
 from tkinter import *
-#from PIL import ImageTk
-#import PIL.Image
+from PIL import ImageTk
+import PIL.Image
 from tkinter import Menu
 from menus import *
 
@@ -11,11 +11,10 @@ gui.title("C.I.P (Menu Principal)")
 gui.config(bg="#d4d8e6")
 gui.resizable(False, False)
 
-#imagen = PIL.Image.open("img/cip.jpg")
-#imagen = imagen.resize(size=(300, 290))
-#image = ImageTk.PhotoImage(imagen)
-#Label(gui, image=image).place(x=250, y=10)
-
+imagen = PIL.Image.open("img/cip.jpg")
+imagen = imagen.resize(size=(300, 290))
+image = ImageTk.PhotoImage(imagen)
+Label(gui, image=image).place(x=250, y=10)
 
 menubar = Menu(gui)
 filemenu = Menu(menubar, tearoff=0)
@@ -28,10 +27,6 @@ helpmenu.add_command(label="Agregar alumno", command=menu_agregar_alumno)
 helpmenu.add_command(label="Listar alumnos", command=menu_listar_alumnos)
 menubar.add_cascade(label="Alumnos", menu=helpmenu)
 
-profmenu = Menu(menubar, tearoff=0)
-profmenu.add_command(label="Agregar profesor", command=menu_agregar_profesor)
-profmenu.add_command(label="Listar profesor", command=menu_listar_alumnos)
-menubar.add_cascade(label="Profesores", menu=profmenu)
 
 gui.config(menu=menubar)
 gui.mainloop()

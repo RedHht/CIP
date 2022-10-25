@@ -8,6 +8,7 @@ def agregar_curso(curso):
     cursos.append(curso)
     globals()[curso] = []
     globals()["prof" + curso] = []
+    globals()["pres" + curso] = []
     return cursos
 
 def agregar_alumno(curso, alumno):

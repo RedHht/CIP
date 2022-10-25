@@ -33,6 +33,8 @@ MANIFEST
 *.manifest
 *.spec
 
+venv
+
 # Installer logs
 pip-log.txt
 pip-delete-this-directory.txt
@@ -64,6 +66,9 @@ db.sqlite3-journal
 # Flask stuff:
 instance/
 .webassets-cache
+
+#IntelliJ
+.idea
 
 # Scrapy stuff:
 .scrapy

@@ -1,6 +1,6 @@
 from tkinter import *
-#from PIL import ImageTk
-#import PIL.Image
+from PIL import ImageTk
+import PIL.Image
 from tkinter import Menu
 from menus import *
 
@@ -11,11 +11,10 @@ gui.title("C.I.P (Menu Principal)")
 gui.config(bg="#d4d8e6")
 gui.resizable(False, False)
 
-#imagen = PIL.Image.open("img/cip.jpg")
-#imagen = imagen.resize(size=(300, 290))
-#image = ImageTk.PhotoImage(imagen)
-#Label(gui, image=image).place(x=250, y=10)
-
+imagen = PIL.Image.open("img/cip.jpg")
+imagen = imagen.resize(size=(300, 290))
+image = ImageTk.PhotoImage(imagen)
+Label(gui, image=image).place(x=250, y=10)
 
 menubar = Menu(gui)
 filemenu = Menu(menubar, tearoff=0)

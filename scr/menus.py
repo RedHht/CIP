@@ -3,18 +3,19 @@ from tkinter import ttk
 from tkinter import messagebox
 from funciones import *
 
+
 def test_agregar_curso():
     global cursos
     try:
         añotest = año.get()
         divisiontest = division.get()
-        if añotest > 0 and añotest <= 7:
-            if divisiontest > 0 and divisiontest <= 6:
+        if 0 < añotest <= 7:
+            if 0 < divisiontest <= 6:
                 añotest = str(añotest)
                 divisiontest = str(divisiontest)
                 try:
-                    cursos.index(añotest + "°" + divisiontest) 
-                    labelinfo.config(text="Este curso ya existe.") 
+                    cursos.index(añotest + "°" + divisiontest)
+                    labelinfo.config(text="Este curso ya existe.")
                 except ValueError:
                     cursos = agregar_curso(añotest + "°" + divisiontest)
                     cursos.sort()
@@ -26,6 +27,7 @@ def test_agregar_curso():
     except:
         pass
         labelinfo.config(text="Ingrese numeros validos.")
+
 
 def test_agregar_alumno():
     curso = curso_agregar_alumno.get()
@@ -39,6 +41,7 @@ def test_agregar_alumno():
             agregar_alumno(curso, alumno)
             labelinfoingresaralumno.config(text="Alumno agregado correctamente")
 
+
 def test_agregar_profesor():
     curso = curso_agregar_profesor.get()
     profesor = profesor_agregar_profesor.get()
@@ -51,19 +54,21 @@ def test_agregar_profesor():
             agregar_profesor(curso, profesor)
             labelinfoingresarprofesor.config(text="Profesor agregado correctamente")
 
-def ing_valores():
 
+def ing_valores():
+    globals()["pres" + curso_listar_alumno.get()] = []
     for x in checkbox:
         x = x.get()
         globals()["pres" + curso_listar_alumno.get()].append(x)
 
+
 def lista_de_alumnos():
     if curso_listar_alumno.get() == "":
         messagebox.showerror(title="Error", message="Selecciona un curso")
-    
+
     else:
         gui_lista_alumno = Toplevel()
-        gui_lista_alumno.geometry("400x75")
+        gui_lista_alumno.geometry("400x500")
         gui_lista_alumno.title("C.I.P (Lista de alumnos del curso)")
         gui_lista_alumno.config(bg="#ffffff")
 
@@ -82,12 +87,14 @@ def lista_de_alumnos():
             checkbox = []
 
             for x in sorted(alumnos):
-                Label(gui_lista_alumno, text=x, background="#ffffff").grid(row=linea, column=1, sticky='w', padx=5, pady=5)
+                Label(gui_lista_alumno, text=x, background="#ffffff").grid(row=linea, column=1, sticky='w', padx=5,
+                                                                           pady=5)
                 checkbox.append(IntVar())
-                Checkbutton(gui_lista_alumno, background="#ffffff", variable=checkbox[linea]).grid(row=linea, column=2, sticky='w', padx=5, pady=5)
-                linea += 1 
-                
-            linea += 1 
+                Checkbutton(gui_lista_alumno, background="#ffffff", variable=checkbox[linea]).grid(row=linea, column=2,
+                                                                                            sticky='w', padx=5, pady=5)
+                linea += 1
+
+            linea += 1
         else:
 
             alumnos = lista_alumnos(curso_listar_alumno.get())
@@ -95,32 +102,37 @@ def lista_de_alumnos():
             linea = 0
             lineaa = 0
 
-            for x in sorted(alumnos):
-                Label(gui_lista_alumno, text=x, background="#ffffff").grid(row=linea, column=1, sticky='w', padx=5, pady=5)
-                linea += 1 
+            checkbox = []
 
+            for x in sorted(alumnos):
+                Label(gui_lista_alumno, text=x, background="#ffffff").grid(row=linea, column=1, sticky='w', padx=5,
+                                                                           pady=5)
+                linea += 1
 
             for i in globals()["pres" + curso_listar_alumno.get()]:
                 print(globals()["pres" + curso_listar_alumno.get()])
                 if i == 1:
-                    activo = Checkbutton(gui_lista_alumno, background="#ffffff", variable=globals()["pres" + curso_listar_alumno.get()][lineaa])
+                    checkbox.append(IntVar())
+                    activo = Checkbutton(gui_lista_alumno, background="#ffffff",
+                                         variable=checkbox[lineaa])
                     activo.grid(row=lineaa, column=2, sticky='w', padx=5, pady=5)
                     activo.select()
                 elif i == 0:
-                    desactivo = Checkbutton(gui_lista_alumno, background="#ffffff", variable=globals()["pres" + curso_listar_alumno.get()][lineaa])
+                    checkbox.append(IntVar())
+                    desactivo = Checkbutton(gui_lista_alumno, background="#ffffff", variable=checkbox[lineaa])
                     desactivo.grid(row=lineaa, column=2, sticky='w', padx=5, pady=5)
                     desactivo.deselect()
-                lineaa += 1 
-                
-                
-            linea += 1 
+                lineaa += 1
 
-        Button(gui_lista_alumno, text="Ingresar valores", command=ing_valores).grid(row=linea, column=0, sticky='w', padx=5, pady=5)
+            linea += 1
+
+        Button(gui_lista_alumno, text="Ingresar valores", command=ing_valores).grid(row=linea, column=0, sticky='w',
+                                                                                    padx=5, pady=5)
 
         return alumnos
 
-def menu_agregar_curso():
 
+def menu_agregar_curso():
     gui_agregar_curso = Toplevel()
     gui_agregar_curso.geometry("400x115")
     gui_agregar_curso.title("C.I.P (Agregar un nuevo curso)")
@@ -156,6 +168,7 @@ def menu_agregar_curso():
 
     ingresar.grid(row=2, column=0, sticky='w', padx=5, pady=5)
 
+
 def menu_listar_cursos():
     if len(cursos) == 0:
         messagebox.showerror(message="Actualmente no existe ningun curso", title="Error")
@@ -174,13 +187,13 @@ def menu_listar_cursos():
         for x in sorted(cursos):
             if cursos.index(x) == 0:
                 cursos_formateados = x
-            else: 
+            else:
                 cursos_formateados = cursos_formateados + ", " + x
-        
+
         labelcursosformateados.config(text="Los cursos que existen actualmente son: " + cursos_formateados)
 
-def menu_agregar_alumno():
 
+def menu_agregar_alumno():
     gui_agregar_alumno = Toplevel()
     gui_agregar_alumno.geometry("400x150")
     gui_agregar_alumno.title("C.I.P (Agregar un alumno)")
@@ -190,7 +203,8 @@ def menu_agregar_alumno():
 
     curso_agregar_alumno = StringVar()
 
-    combocursos = ttk.Combobox(gui_agregar_alumno, values=sorted(cursos), textvariable=curso_agregar_alumno, state="readonly")
+    combocursos = ttk.Combobox(gui_agregar_alumno, values=sorted(cursos), textvariable=curso_agregar_alumno,
+                               state="readonly")
     combocursos.grid(row=0, column=0, sticky='w', padx=5, pady=5)
 
     global alumno_agregar_alumno
@@ -213,6 +227,7 @@ def menu_agregar_alumno():
 
     ingresar.grid(row=2, column=0, sticky='w', padx=5, pady=5)
 
+
 def menu_listar_alumnos():
     gui_listar_alumno = Toplevel()
     gui_listar_alumno.geometry("400x75")
@@ -223,15 +238,16 @@ def menu_listar_alumnos():
 
     curso_listar_alumno = StringVar()
 
-    combocursos = ttk.Combobox(gui_listar_alumno, values=sorted(cursos), textvariable=curso_listar_alumno, state="readonly")
+    combocursos = ttk.Combobox(gui_listar_alumno, values=sorted(cursos), textvariable=curso_listar_alumno,
+                               state="readonly")
     combocursos.grid(row=0, column=0, sticky='w', padx=5, pady=5)
 
     ingresar = Button(gui_listar_alumno, text="Ver lista de alumnos", command=lista_de_alumnos)
 
     ingresar.grid(row=2, column=0, sticky='w', padx=5, pady=5)
 
-def menu_agregar_profesor():
 
+def menu_agregar_profesor():
     gui_agregar_profesor = Toplevel()
     gui_agregar_profesor.geometry("400x150")
     gui_agregar_profesor.title("C.I.P (Agregar un profesor)")
@@ -241,7 +257,8 @@ def menu_agregar_profesor():
 
     curso_agregar_profesor = StringVar()
 
-    combocursos = ttk.Combobox(gui_agregar_profesor, values=cursos, textvariable=curso_agregar_profesor, state="readonly")
+    combocursos = ttk.Combobox(gui_agregar_profesor, values=cursos, textvariable=curso_agregar_profesor,
+                               state="readonly")
     combocursos.grid(row=0, column=0, sticky='w', padx=5, pady=5)
 
     global profesor_agregar_profesor
@@ -264,7 +281,7 @@ def menu_agregar_profesor():
 
     ingresar.grid(row=2, column=0, sticky='w', padx=5, pady=5)
 
-#def agregarprof():
+# def agregarprof():
 #    if(escuela.get() == "s"):
 #        print("a seleccionado ausente")
 #    else:
@@ -272,18 +289,16 @@ def menu_agregar_profesor():
 #            print("a seleccionado presente")
 
 
-#x = Tk()
-#x.title("lista de profesores") #Titulo
-#x.geometry("520x200") # ancho y altur
+# x = Tk()
+# x.title("lista de profesores") #Titulo
+# x.geometry("520x200") # ancho y altur
 
-#presente=IntVar()
-#ausente=IntVar()
-#depa=StringVar()
-#deps=StringVar()
-#escuela= StringVar()
-#escuela.set("m")
+# presente=IntVar()
+# ausente=IntVar()
+# depa=StringVar()
+# deps=StringVar()
+# escuela= StringVar()
+# escuela.set("m")
 
-#Checkbutton(x,text="presente",variable=depa,onvalue="a").place(x=10,y=55)
-#Checkbutton(x,text="ausente",variable=deps,onvalue="s").place(x=10,y=55)
-
-
+# Checkbutton(x,text="presente",variable=depa,onvalue="a").place(x=10,y=55)
+# Checkbutton(x,text="ausente",variable=deps,onvalue="s").place(x=10,y=55)

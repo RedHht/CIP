@@ -27,10 +27,10 @@ helpmenu.add_command(label="Agregar alumno", command=menu_agregar_alumno)
 helpmenu.add_command(label="Listar alumnos", command=menu_listar_alumnos)
 menubar.add_cascade(label="Alumnos", menu=helpmenu)
 
-profmenu = Menu(menubar, tearoff=0)
+"""profmenu = Menu(menubar, tearoff=0)
 profmenu.add_command(label="Agregar profesor", command=menu_agregar_profesor)
 profmenu.add_command(label="Listar profesor", command=menu_listar_alumnos)
-menubar.add_cascade(label="Profesores", menu=profmenu)
+menubar.add_cascade(label="Profesores", menu=profmenu)"""
 
 gui.config(menu=menubar)
 gui.mainloop()

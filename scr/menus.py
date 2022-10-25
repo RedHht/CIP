@@ -42,7 +42,7 @@ def test_agregar_alumno():
             labelinfoingresaralumno.config(text="Alumno agregado correctamente")
 
 
-def test_agregar_profesor():
+"""def test_agregar_profesor():
     curso = curso_agregar_profesor.get()
     profesor = profesor_agregar_profesor.get()
     if curso == "":
@@ -52,7 +52,7 @@ def test_agregar_profesor():
             labelinfoingresarprofesor.config(text="No ingresaste ningun profesor")
         else:
             agregar_profesor(curso, profesor)
-            labelinfoingresarprofesor.config(text="Profesor agregado correctamente")
+            labelinfoingresarprofesor.config(text="Profesor agregado correctamente")"""
 
 
 def ing_valores():
@@ -95,12 +95,17 @@ def lista_de_alumnos():
                 linea += 1
 
             linea += 1
+            Button(gui_lista_alumno, text="Ingresar valores", command=ing_valores).grid(row=linea, column=0,
+                                                                                    sticky='w',
+                                                                                    padx=5, pady=5)
         else:
 
             alumnos = lista_alumnos(curso_listar_alumno.get())
 
             linea = 0
             lineaa = 0
+            presentes = 0
+            ausentes = 0
 
             checkbox = []
 
@@ -117,18 +122,21 @@ def lista_de_alumnos():
                                          variable=checkbox[lineaa])
                     activo.grid(row=lineaa, column=2, sticky='w', padx=5, pady=5)
                     activo.select()
+                    presentes += 1
                 elif i == 0:
                     checkbox.append(IntVar())
                     desactivo = Checkbutton(gui_lista_alumno, background="#ffffff", variable=checkbox[lineaa])
                     desactivo.grid(row=lineaa, column=2, sticky='w', padx=5, pady=5)
                     desactivo.deselect()
+                    ausentes += 1
                 lineaa += 1
-
             linea += 1
 
-        Button(gui_lista_alumno, text="Ingresar valores", command=ing_valores).grid(row=linea, column=0, sticky='w',
-                                                                                    padx=5, pady=5)
-
+            Label(gui_lista_alumno, text=f"Presentes: {presentes}", background="#ffffff").grid(row=linea, column=1, sticky='w', padx=5, pady=5)
+            Label(gui_lista_alumno, text=f"Ausentes: {ausentes}", background="#ffffff").grid(row=linea, column=2, sticky='w', padx=5, pady=5)
+            Button(gui_lista_alumno, text="Ingresar valores", command=ing_valores).grid(row=linea, column=0,
+                                                                                            sticky='w',
+                                                                                            padx=5, pady=5)
         return alumnos
 
 
@@ -247,7 +255,7 @@ def menu_listar_alumnos():
     ingresar.grid(row=2, column=0, sticky='w', padx=5, pady=5)
 
 
-def menu_agregar_profesor():
+"""def menu_agregar_profesor():
     gui_agregar_profesor = Toplevel()
     gui_agregar_profesor.geometry("400x150")
     gui_agregar_profesor.title("C.I.P (Agregar un profesor)")
@@ -301,4 +309,4 @@ def menu_agregar_profesor():
 # escuela.set("m")
 
 # Checkbutton(x,text="presente",variable=depa,onvalue="a").place(x=10,y=55)
-# Checkbutton(x,text="ausente",variable=deps,onvalue="s").place(x=10,y=55)
+# Checkbutton(x,text="ausente",variable=deps,onvalue="s").place(x=10,y=55)"""

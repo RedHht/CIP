@@ -7,7 +7,7 @@ def agregar_profesor(curso, prof):
 def agregar_curso(curso):
     cursos.append(curso)
     globals()[curso] = []
-    globals()["prof" + curso] = []
+    globals()["fechas" + curso] = []
     globals()["pres" + curso] = []
     return cursos
 

@@ -25,6 +25,7 @@ menubar.add_cascade(label="Cursos", menu=filemenu)
 helpmenu = Menu(menubar, tearoff=0)
 helpmenu.add_command(label="Agregar alumno", command=menu_agregar_alumno)
 helpmenu.add_command(label="Listar alumnos", command=menu_listar_alumnos)
+helpmenu.add_command(label="Tomar lista", command=tomar_lista_menu)
 menubar.add_cascade(label="Alumnos", menu=helpmenu)
 
 

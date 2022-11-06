@@ -1,3 +1,4 @@
+import datetime
 from tkinter import *
 from tkinter import ttk
 from tkinter import messagebox
@@ -48,6 +49,55 @@ def ing_valores():
         x = x.get()
         globals()["pres" + curso_listar_alumno.get()].append(x)
 
+
+def tomar_lista_menu():
+    menu_tomar_lista = Toplevel()
+    menu_tomar_lista.geometry("500x100")
+    menu_tomar_lista.title("C.I.P (Menu para tomar lista)")
+    menu_tomar_lista.config(bg="#ffffff")
+
+    global curso_tomar_lista
+
+    curso_tomar_lista = StringVar()
+
+    Label(menu_tomar_lista, text="Curso:", background="#ffffff").grid(row=0, column=0, sticky='w', padx=5, pady=5)
+    ttk.Combobox(menu_tomar_lista, values=cursos, textvariable=curso_tomar_lista).grid(row=0, column=1, sticky='w', padx=5, pady=5)
+
+    Label(menu_tomar_lista, text="¿Que desea hacer?", background="#ffffff").grid(row=1, column=0, sticky='w', padx=5, pady=5)
+
+    Button(menu_tomar_lista, text="Tomar lista de hoy", command=tomar_lista_hoy).grid(row=2, column=0, sticky='w', padx=5, pady=5)
+    Button(menu_tomar_lista, text="Seleccionar fecha", command=tomar_lista_fecha).grid(row=2, column=1, sticky='w', padx=5, pady=5)
+
+    menu_tomar_lista.mainloop()
+
+def tomar_lista_hoy():
+    tomar_lista_hoy = Toplevel()
+    tomar_lista_hoy.geometry("400x500")
+    tomar_lista_hoy.title("C.I.P (Tomar lista de hoy)")
+    tomar_lista_hoy.config(bg="#ffffff")
+
+    alumnos = lista_alumnos(curso_tomar_lista.get())
+    checkbox = []
+
+    for x in alumnos:
+        Label(tomar_lista_hoy, text=x, background="#ffffff").grid(row=alumnos.index(x), column=1, sticky='w', padx=5, pady=5)
+        checkbox.append(IntVar())
+        Checkbutton(tomar_lista_hoy, variable=checkbox[alumnos.index(x)], background="#ffffff").grid(row=alumnos.index(x), column=2, sticky='w', padx=5, pady=5)
+
+    fecha = datetime.datetime.now().date()
+
+    Label(tomar_lista_hoy, text=f"Fecha: {fecha}", background="#ffffff").grid(row=0, column=0, sticky='w', padx=5, pady=5)
+
+    tomar_lista_hoy.mainloop()
+
+
+def tomar_lista_fecha():
+    tomar_lista_fecha = Toplevel()
+    tomar_lista_fecha.geometry("400x500")
+    tomar_lista_fecha.title("C.I.P (Tomar lista de hoy)")
+    tomar_lista_fecha.config(bg="#ffffff")
+
+    tomar_lista_fecha.mainloop()
 
 def lista_de_alumnos():
     if curso_listar_alumno.get() == "":

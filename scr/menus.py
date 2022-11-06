@@ -96,13 +96,15 @@ def lista_de_alumnos():
 
             checkbox = []
 
-            for x in sorted(alumnos):
+            for x in alumnos:
                 Label(gui_lista_alumno, text=x, background="#ffffff").grid(row=linea, column=1, sticky='w', padx=5,
                                                                            pady=5)
                 linea += 1
 
             for i in globals()["pres" + curso_listar_alumno.get()]:
                 print(globals()["pres" + curso_listar_alumno.get()])
+                while len(globals()["pres" + curso_listar_alumno.get()]) < len(alumnos):
+                    globals()["pres" + curso_listar_alumno.get()].append(0)
                 if i == 1:
                     checkbox.append(IntVar())
                     activo = Checkbutton(gui_lista_alumno, background="#ffffff",

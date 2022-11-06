@@ -169,24 +169,26 @@ def menu_listar_cursos():
         messagebox.showerror(message="Actualmente no existe ningun curso", title="Error")
     else:
         gui_listar_cursos = Toplevel()
-        gui_listar_cursos.geometry("400x200")
+        gui_listar_cursos.geometry("325x175")
         gui_listar_cursos.title("C.I.P (Lista de cursos)")
         gui_listar_cursos.config(bg="#ffffff")
 
-        labelcursosformateados = Label(gui_listar_cursos, text="", background="#ffffff", wraplength=390, justify=LEFT)
+        scrollbar = Scrollbar(gui_listar_cursos, orient='vertical')
+        scrollbar.grid(row=0, column=2, sticky='ns', padx=5, pady=5)
+        labelcursosformateados = Label(gui_listar_cursos, text="Los cursos disponibles son:", background="#ffffff", wraplength=390, justify=LEFT)
 
-        labelcursosformateados.place(y=10, x=10)
+        labelcursosformateados.grid(row=0, column=0, sticky='nw', padx=5, pady=5)
 
-        cursos_formateados = ""
+        lista = Listbox(gui_listar_cursos)
 
-        for x in sorted(cursos):
-            if cursos.index(x) == 0:
-                cursos_formateados = x
-            else:
-                cursos_formateados = cursos_formateados + ", " + x
+        lista.grid(row=0, column=1, sticky='nw', padx=5, pady=5)
 
-        labelcursosformateados.config(text="Los cursos que existen actualmente son: " + cursos_formateados)
+        cursosordenados = sorted(cursos)
 
+        lista.insert(0, *cursosordenados)
+
+        lista.config(yscrollcommand=scrollbar.set)
+        scrollbar.config(command=lista.yview)
 
 def menu_agregar_alumno():
     gui_agregar_alumno = Toplevel()

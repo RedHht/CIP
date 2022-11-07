@@ -11,6 +11,15 @@ def agregar_curso(curso):
     globals()["pres" + curso] = []
     return cursos
 
+def agregar_fecha(fechaing, curso, presentes, alumnos):
+    fecha = str(fechaing)
+    globals()[fecha + curso + "alumnos"] = alumnos
+    globals()[fecha + curso + "presentes"] = presentes
+    globals()["fechas" + curso].append(fecha)
+
+def ver_lista_fn(curso, fecha):
+    return [globals()[str(fecha) + str(curso) + "alumnos"], globals()[str(fecha) + str(curso) + "presentes"]]
+
 def agregar_alumno(curso, alumno):
     globals()[curso].append (alumno)
     return globals()[curso]

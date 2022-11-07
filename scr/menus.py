@@ -2,8 +2,10 @@ import datetime
 from tkinter import *
 from tkinter import ttk
 from tkinter import messagebox
+from tkcalendar import Calendar
 from funciones import *
 
+fuente = ("Comic Sans MS", 15, "bold")
 
 def test_agregar_curso():
     global cursos
@@ -61,7 +63,7 @@ def test_nueva_fecha():
     presentesyausentes.config(text=f"Presentes: {presente} Ausentes: {ausente}")
 
 def test_ver_lista():
-    fecha = ver_lista_fecha.get()
+    fecha = calendarioo.selection_get()
     año = ver_lista_año.get()
     todo = ver_lista_fn(año, fecha)
     ver_lista = Toplevel()
@@ -72,7 +74,7 @@ def test_ver_lista():
     contador = 0
 
     for x in todo[0]:
-        Label(ver_lista, text=x, background="#ffffff").grid(row=todo[0].index(x), column=1, sticky='w', padx=5, pady=5)
+        Label(ver_lista, text=x, background="#ffffff", font=fuente).grid(row=todo[0].index(x), column=1, sticky='w', padx=5, pady=5)
 
     for x in todo[1]:
         print(todo[1])
@@ -97,20 +99,23 @@ def ing_valores():
 
 def ver_lista_menu():
     ver_lista_menu = Toplevel()
-    ver_lista_menu.geometry("500x100")
+    ver_lista_menu.geometry("325x275")
     ver_lista_menu.title("C.I.P (Menu para ver lista)")
     ver_lista_menu.config(bg="#ffffff")
 
-    global ver_lista_fecha
     global ver_lista_año
 
-    ver_lista_fecha = StringVar()
     ver_lista_año = StringVar()
 
-    Label(ver_lista_menu, text="Fecha:").grid(row=0, column=0, sticky='w', padx=5, pady=5)
-    Entry(ver_lista_menu, textvariable=ver_lista_fecha).grid(row=0, column=1, sticky='w', padx=5, pady=5)
+    Label(ver_lista_menu, text="Fecha:").grid(row=0, column=0, sticky='nw', padx=5, pady=5)
+    #Entry(ver_lista_menu, textvariable=ver_lista_fecha).grid(row=0, column=1, sticky='w', padx=5, pady=5)
 
-    Label(ver_lista_menu, text="Curso:").grid(row=1, column=0, sticky='w', padx=5, pady=5)
+    global calendarioo
+
+    calendarioo = Calendar(ver_lista_menu)
+    calendarioo.grid(row=0, column=1, sticky='w', padx=5, pady=5)
+
+    Label(ver_lista_menu, text="Curso:", font=fuente).grid(row=1, column=0, sticky='w', padx=5, pady=5)
     ttk.Combobox(ver_lista_menu, values=cursos, textvariable=ver_lista_año).grid(row=1, column=1, sticky='w', padx=5, pady=5)
 
     Button(ver_lista_menu, text="Ingresar", command=test_ver_lista).grid(row=2, column=0, sticky='w', padx=5, pady=5)
@@ -133,7 +138,7 @@ def tomar_lista_menu():
     Label(menu_tomar_lista, text="¿Que desea hacer?", background="#ffffff").grid(row=1, column=0, sticky='w', padx=5, pady=5)
 
     Button(menu_tomar_lista, text="Tomar lista de hoy", command=tomar_lista_hoy).grid(row=2, column=0, sticky='w', padx=5, pady=5)
-    Button(menu_tomar_lista, text="Seleccionar fecha", command=tomar_lista_fecha).grid(row=2, column=1, sticky='w', padx=5, pady=5)
+    Button(menu_tomar_lista, text="Seleccionar fecha", command=seleccionar_fecha).grid(row=2, column=1, sticky='w', padx=5, pady=5)
 
     menu_tomar_lista.mainloop()
 
@@ -170,14 +175,53 @@ def tomar_lista_hoy():
 
     tomar_lista_hoy.mainloop()
 
+def seleccionar_fecha():
+    seleccionar_fecha = Toplevel()
+    seleccionar_fecha.geometry("300x250")
+    seleccionar_fecha.title("C.I.P (Seleccionar fecha)")
+    seleccionar_fecha.config(bg="#ffffff")
+
+    global calendario
+
+    calendario = Calendar(seleccionar_fecha)
+    calendario.grid(row=0, column=0, sticky='w', padx=5, pady=5)
+
+    Button(seleccionar_fecha, text="Tomar lista", command=tomar_lista_fecha).grid(row=1, column=0, sticky='w', padx=5, pady=5)
+
+    seleccionar_fecha.mainloop()
 
 def tomar_lista_fecha():
-    tomar_lista_fecha = Toplevel()
-    tomar_lista_fecha.geometry("400x500")
-    tomar_lista_fecha.title("C.I.P (Tomar lista de hoy)")
-    tomar_lista_fecha.config(bg="#ffffff")
+    tomar_lista_hoy = Toplevel()
+    tomar_lista_hoy.geometry("400x500")
+    tomar_lista_hoy.title("C.I.P (Tomar lista de una fecha)")
+    tomar_lista_hoy.config(bg="#ffffff")
 
-    tomar_lista_fecha.mainloop()
+    global alumnos_tomar_lista
+    global alumnos_tomar_lista_checkbox
+
+    alumnos_tomar_lista = lista_alumnos(curso_tomar_lista.get())
+    alumnos_tomar_lista_checkbox = []
+
+    for x in alumnos_tomar_lista:
+        Label(tomar_lista_hoy, text=x, background="#ffffff").grid(row=alumnos_tomar_lista.index(x), column=1, sticky='w', padx=5, pady=5)
+        alumnos_tomar_lista_checkbox.append(IntVar())
+        Checkbutton(tomar_lista_hoy, variable=alumnos_tomar_lista_checkbox[alumnos_tomar_lista.index(x)], background="#ffffff").grid(row=alumnos_tomar_lista.index(x), column=2, sticky='w', padx=5, pady=5)
+        ultimalinea = alumnos_tomar_lista.index(x)
+
+    global fecha
+
+    fecha = calendario.selection_get()
+
+    Label(tomar_lista_hoy, text=f"Fecha: {fecha}", background="#ffffff").grid(row=0, column=0, sticky='w', padx=5, pady=5)
+
+    Button(tomar_lista_hoy, text="Ingresar", command=test_nueva_fecha).grid(row=ultimalinea+2, column=0, sticky='w', padx=5, pady=5)
+    global presentesyausentes
+    presentesyausentes = Label(tomar_lista_hoy, text="", background="#FFFFFF")
+    presentesyausentes.grid(row=ultimalinea+2, column=1, sticky='w', padx=5, pady=5)
+
+    print(ultimalinea)
+
+    tomar_lista_hoy.mainloop()
 
 def lista_de_alumnos():
     if curso_listar_alumno.get() == "":
